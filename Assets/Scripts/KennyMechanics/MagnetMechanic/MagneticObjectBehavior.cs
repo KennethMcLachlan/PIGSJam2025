@@ -1,0 +1,140 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class MagneticObjectBehavior : MonoBehaviour
+{
+    //Object variables
+    [SerializeField] private float _speed = 1f;
+    private Rigidbody _rb;
+    private Vector3 _grabOffset;
+    private Transform _controllerTransform;
+
+    //Magnet Ray Script
+    private MagnetRayBehavior _magnetRayBehavior;
+
+    //Object Sway Variables
+    private Vector3 _centerOfGravity;
+    [SerializeField] private float _swayForce = 0.1f;
+    [SerializeField] private float _damping = 0.01f;
+
+    private bool _isSwayActive;
+    private bool _isPressingA;
+    private bool _isPressingB;
+    
+    private void Start()
+    {
+        _magnetRayBehavior = GameObject.Find("XR Origin (XR Rig)/Camera Offset/Right Controller")?.GetComponent<MagnetRayBehavior>(); ;
+        if (_magnetRayBehavior == null)
+        {
+            Debug.LogError("Magnet Ray was not found by the Magnetic object prefab");
+        }
+
+        _rb = this.gameObject.GetComponent<Rigidbody>();
+        if (_rb == null)
+        {
+            Debug.LogError("Rigidbody on Magnetic Object not found");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //Sway Behavior on Object (Forces push toward center of object)
+        if (_isSwayActive && _magnetRayBehavior != null)
+        {
+            Vector3 directionToCenter = _magnetRayBehavior.transform.TransformPoint(_centerOfGravity) - transform.position;
+            Vector3 swayForceDirection = directionToCenter * _swayForce;
+
+            _rb.AddForce(swayForceDirection * _damping, ForceMode.Acceleration);
+            _rb.useGravity = false;
+
+            if (_controllerTransform != null)
+            {
+                Vector3 targetPosition = _controllerTransform.TransformPoint(_grabOffset);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, _speed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, _controllerTransform.rotation, _speed * Time.deltaTime);
+            }
+        }
+
+        //Initiate moving the object toward and away from the player
+        if (_isPressingA == true)
+        {
+            TowardMovement();
+        }
+
+        if (_isPressingB == true)
+        {
+            AwayMovement();
+        }
+    }
+
+    public void AttachToMagnet(Vector3 grabPoint, Transform controller)
+    {
+        _controllerTransform = controller;
+        _grabOffset = controller.InverseTransformPoint(grabPoint);
+        _centerOfGravity = transform.InverseTransformPoint(grabPoint);
+        InitiateSway();
+    }
+
+    public void DetachMagnet()
+    {
+        _controllerTransform = null;
+        DeactivateAButton();
+        DeactivateBButton();
+        DeactivateSway();
+
+        if (_rb != null)
+        {
+            _rb.useGravity = true;
+        }
+    }
+    public void InitiateSway()
+    {
+        _isSwayActive = true;
+    }
+
+    public void DeactivateSway()
+    {
+        _isSwayActive = false;
+    }
+
+    //Move Object Away & Toward the Player
+    public void AwayMovement()
+    {
+        var player = _magnetRayBehavior.transform;
+        Vector3 direction = transform.position - player.position;
+        direction.Normalize();
+
+        transform.position += direction * _speed * Time.deltaTime;
+
+        Debug.Log("Object is moving away from the player");
+    }
+
+    public void TowardMovement()
+    {
+        var player = _magnetRayBehavior.transform;
+        gameObject.transform.position = Vector3.MoveTowards(transform.position, player.position, _speed * Time.deltaTime);
+
+        Debug.Log("The object is moving toward the player");
+    }
+
+    public void ActivateAButton()
+    {
+        _isPressingA = true;
+    }
+    
+    public void DeactivateAButton()
+    {
+        _isPressingA = false;
+    }
+
+    public void ActivateBButton()
+    {
+        _isPressingB = true;
+    }
+
+    public void DeactivateBButton()
+    {
+        _isPressingB = false;
+    }
+
+}
