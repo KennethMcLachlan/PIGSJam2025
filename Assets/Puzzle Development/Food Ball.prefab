@@ -14770,6 +14770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e24df734f75254d8365bcf79ace43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detector: {fileID: 0}
   launchClips:
   - {fileID: 8300000, guid: 336839382485168479f16a6f557d7b19, type: 3}
   hitClips:

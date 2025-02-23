@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FoodBall : MonoBehaviour
 {
+    private bool bursted;
+    [SerializeField] private BallDetector detector;
+
     [Header("Audio")]
     [SerializeField] private AudioClip[] launchClips;
     [SerializeField] private AudioClip[] hitClips;
@@ -20,6 +23,7 @@ public class FoodBall : MonoBehaviour
     private void OnEnable()
     {
         rb.isKinematic = false;
+        bursted = false;
         BallLaunched();
     }
     #endregion
@@ -27,19 +31,49 @@ public class FoodBall : MonoBehaviour
     #region Collision
     private void OnCollisionEnter(Collision collision)
     {
-        BallDetector detector = collision.transform.GetComponentInParent<BallDetector>();
-        if (detector != null)
+        if (!bursted)
         {
-            detector.BallDetected(this);
+            detector = collision.transform.GetComponentInParent<BallDetector>();
+            if (detector != null)
+            {
+                detector.BallDetected(this);
+            }
+            else
+            {
+                StartCoroutine(nameof(Burst));
+            }
         }
-        else
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!bursted)
         {
-            StartCoroutine(nameof(Burst));
+            detector = other.GetComponentInParent<BallDetector>();
+            if (detector != null)
+            {
+                detector.BallDetected(this);
+            }
+            else
+            {
+                StartCoroutine(nameof(Burst));
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!bursted)
+        {
+            detector.BallLost();
         }
     }
 
     private IEnumerator Burst()
     {
+        if(detector != null)
+        {
+            detector.BallLost();
+        }
         transform.parent = null;
         ballColl.enabled = false;
         rb.isKinematic = true;

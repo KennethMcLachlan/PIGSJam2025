@@ -1117,20 +1117,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "efd100068a3d42c08a538f7f939d2a46"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "8f226c903cdb4180996db1e3e749bea2"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "f065c8446c714c168e8a0c88867d5af2"
                 },
                 "m_SlotId": 2
@@ -2267,8 +2253,8 @@
     "m_ObjectId": "1f8fcfa33f8d412d9047d56cd53f78c9",
     "m_Title": "Color",
     "m_Position": {
-        "x": -2306.000244140625,
-        "y": -440.0000305175781
+        "x": -2306.0,
+        "y": -440.0
     }
 }
 
@@ -2942,8 +2928,8 @@
     "m_ObjectId": "35316906c82341e68fd15081aa2d63f3",
     "m_Title": "Smoothness",
     "m_Position": {
-        "x": -932.0001220703125,
-        "y": 134.99996948242188
+        "x": -932.0,
+        "y": 135.0
     }
 }
 
@@ -3684,7 +3670,7 @@
     "m_ShaderOutputName": "A",
     "m_StageCapability": 3,
     "m_Value": {
-        "e00": 0.0,
+        "e00": 1.0,
         "e01": 0.0,
         "e02": 0.0,
         "e03": 0.0,
@@ -3779,7 +3765,7 @@
     "m_Title": "Normal",
     "m_Position": {
         "x": -1434.0,
-        "y": 643.0000610351563
+        "y": 643.0
     }
 }
 
@@ -4553,7 +4539,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"2d32d205cfc8c76478a9fef76d90c8e9\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"6c8b804133ef00344821cff56dd65f21\",\"type\":3}}",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -5636,7 +5622,7 @@
     "m_Title": "Wall Gradient",
     "m_Position": {
         "x": -2634.0,
-        "y": -1016.0000610351563
+        "y": -1016.0
     }
 }
 
@@ -8372,8 +8358,8 @@
     "m_ObjectId": "fefa3a6459a94e1d8cfc6becf486e2a6",
     "m_Title": "Ripple",
     "m_Position": {
-        "x": -2962.000244140625,
-        "y": -1771.0
+        "x": -2962.0,
+        "y": -1770.9998779296875
     }
 }
 
