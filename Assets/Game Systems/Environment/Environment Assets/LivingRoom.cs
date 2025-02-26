@@ -5,6 +5,9 @@ using UnityEngine.Events;
 public class LivingRoom : MonoBehaviour
 {
     #region References
+    [Header("Variables")]
+    [SerializeField] private bool firstRoom;
+    [Space(20)]
     [Header("References")]
     [SerializeField] private FoodTube foodTube;
     [SerializeField] private Mouth[] mouths;
@@ -13,6 +16,22 @@ public class LivingRoom : MonoBehaviour
     #endregion
 
     #region Configuration
+    private void Start()
+    {
+        if (!firstRoom)
+        {
+            this.gameObject.SetActive(false);
+            if(exitDoorTube != null)
+            {
+                exitDoorTube.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            Invoke(nameof(PlayerEntered), 3);
+        }
+    }
+
     //configure room when the player enters
     public void PlayerEntered()
     {

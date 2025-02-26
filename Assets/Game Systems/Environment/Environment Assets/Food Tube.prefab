@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2130798121003198319
+--- !u!1 &1112461267994921856
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1582852673087459263}
-  - component: {fileID: 2509746395181973094}
+  - component: {fileID: 3696398374260362676}
+  - component: {fileID: 2589267005780150441}
+  - component: {fileID: 6791778217887411039}
   m_Layer: 0
   m_Name: Enabled Sound
   m_TagString: Untagged
@@ -17,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1582852673087459263
+--- !u!4 &3696398374260362676
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130798121003198319}
+  m_GameObject: {fileID: 1112461267994921856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.718, z: 0}
@@ -32,13 +33,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3499542916939672128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &2509746395181973094
+--- !u!114 &2589267005780150441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112461267994921856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f6276936d8f0c478c9981507b510d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: dad5b1c9b1d0b67409879125b50ba53c, type: 3}
+  - {fileID: 8300000, guid: 41e9b448a57d7df47bf7d8b556d8f4b2, type: 3}
+  - {fileID: 8300000, guid: 39a03b792cc226940992be76a47e5f1e, type: 3}
+  - {fileID: 8300000, guid: 17ee9f05adc235140bc676e58cb23133, type: 3}
+  minPitch: 0.85
+  maxPitch: 1.15
+  soundSource: {fileID: 6791778217887411039}
+--- !u!82 &6791778217887411039
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130798121003198319}
+  m_GameObject: {fileID: 1112461267994921856}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -169,6 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9070020672618947460}
+  - component: {fileID: 7397318745482982091}
   - component: {fileID: 1274735174205336532}
   m_Layer: 0
   m_Name: Launch Sound
@@ -192,6 +214,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3499542916939672128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7397318745482982091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027120122356642224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f6276936d8f0c478c9981507b510d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: dad5b1c9b1d0b67409879125b50ba53c, type: 3}
+  - {fileID: 8300000, guid: 41e9b448a57d7df47bf7d8b556d8f4b2, type: 3}
+  - {fileID: 8300000, guid: 39a03b792cc226940992be76a47e5f1e, type: 3}
+  - {fileID: 8300000, guid: 17ee9f05adc235140bc676e58cb23133, type: 3}
+  minPitch: 0.85
+  maxPitch: 1.15
+  soundSource: {fileID: 1274735174205336532}
 --- !u!82 &1274735174205336532
 AudioSource:
   m_ObjectHideFlags: 0
@@ -384,7 +426,7 @@ PrefabInstance:
       addedObject: {fileID: 9070020672618947460}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5843f1b1d8848ce40866716e1bcda998, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1582852673087459263}
+      addedObject: {fileID: 3696398374260362676}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5843f1b1d8848ce40866716e1bcda998, type: 3}
       insertIndex: -1
@@ -453,7 +495,7 @@ MonoBehaviour:
   ball: {fileID: 8287228139858168363, guid: dd4279967455e4b4a90846ad0eedc0d7, type: 3}
   spawnPosition: {fileID: 7602837116192671679}
   tubeAnim: {fileID: 1174943472199202978}
-  launchSound: {fileID: 0}
+  launchSound: {fileID: 7397318745482982091}
   enabledSound: {fileID: 0}
   testSpawnBall: 0
 --- !u!95 &1174943472199202978

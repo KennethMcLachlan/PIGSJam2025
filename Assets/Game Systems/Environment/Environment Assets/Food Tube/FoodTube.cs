@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FoodTube : MonoBehaviour
 {
+    #region Variables & References
     [Header("Variables")]
     [SerializeField] private float spawnVelocity;
     [SerializeField] private float cooldownTime;
@@ -14,11 +15,14 @@ public class FoodTube : MonoBehaviour
     [Space(10)]
     [SerializeField] private Animator tubeAnim;
     [Space(10)]
-    [SerializeField] private AudioSource launchSound;
-    [SerializeField] private AudioSource enabledSound;
+    [SerializeField] private RandomizedSound launchSound;
+    [SerializeField] private RandomizedSound enabledSound;
+    #endregion
 
     #region Testing
 #if UNITY_EDITOR
+    [Space(20)]
+    [Header("Testing")]
     [SerializeField] private bool testSpawnBall;
     private void FixedUpdate()
     {
@@ -35,6 +39,7 @@ public class FoodTube : MonoBehaviour
 #endif
     #endregion
 
+    #region Tube Controls
     public void EnableTube()
     {
         tubeEnabled = true;
@@ -46,7 +51,7 @@ public class FoodTube : MonoBehaviour
     {
         if(tubeEnabled && !cooldown)
         {
-            //launchSound.Play();
+            launchSound.PlaySound();
             tubeAnim.SetBool("Cooldown", true);
             Instantiate(ball, spawnPosition).rb.linearVelocity = -spawnPosition.up * spawnVelocity;
             Invoke(nameof(CooldownComplete), cooldownTime);
@@ -64,4 +69,5 @@ public class FoodTube : MonoBehaviour
         tubeEnabled = false;
         tubeAnim.SetBool("Enabled", false);
     }
+    #endregion
 }
