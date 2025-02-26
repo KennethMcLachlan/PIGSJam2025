@@ -2068,7 +2068,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "GripMagnetHold",
+                    "name": "TriggerMagnetHold",
                     "type": "Button",
                     "id": "aa5b3d8f-13ec-41ea-8b1c-ab7b3583b353",
                     "expectedControlType": "",
@@ -2093,6 +2093,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GripActionChange",
+                    "type": "Button",
+                    "id": "f5f56426-a377-430c-b70f-df5c61ac7a4b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightThumbstick",
+                    "type": "Value",
+                    "id": "bb06bc75-d19a-4f78-ba9b-38df4d3c0a80",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -2385,11 +2403,11 @@
                 {
                     "name": "",
                     "id": "4e2b9745-ae28-4eb7-ad4e-66765884fbf7",
-                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GripMagnetHold",
+                    "action": "TriggerMagnetHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2412,6 +2430,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveTowardHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c63614a-8a64-4c5e-8dba-240dd43acdc4",
+                    "path": "<XRController>{RightHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GripActionChange",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c520a48-0332-4283-a671-3d0cb03d6c18",
+                    "path": "<XRController>{RightHand}/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightThumbstick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

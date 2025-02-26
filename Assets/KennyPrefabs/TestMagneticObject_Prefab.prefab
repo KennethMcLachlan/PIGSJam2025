@@ -152,3 +152,5 @@ MonoBehaviour:
   _speed: 1
   _swayForce: 0.1
   _damping: 0.01
+  _rotationSpeed: 100
+  _isRotating: 0

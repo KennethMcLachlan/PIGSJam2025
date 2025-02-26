@@ -17,9 +17,13 @@ public class MagneticObjectBehavior : MonoBehaviour
     [SerializeField] private float _swayForce = 0.1f;
     [SerializeField] private float _damping = 0.01f;
 
+    //Object Rotate Variables
+    [SerializeField] private float _rotationSpeed = 100f;
+
     private bool _isSwayActive;
     private bool _isPressingA;
     private bool _isPressingB;
+    public bool _isRotating;
     
     private void Start()
     {
@@ -56,14 +60,17 @@ public class MagneticObjectBehavior : MonoBehaviour
         }
 
         //Initiate moving the object toward and away from the player
-        if (_isPressingA == true)
+        if (_isRotating == false && _magnetRayBehavior != null)
         {
-            TowardMovement();
-        }
+            if (_isPressingA == true)
+            {
+                TowardMovement();
+            }
 
-        if (_isPressingB == true)
-        {
-            AwayMovement();
+            if (_isPressingB == true)
+            {
+                AwayMovement();
+            }
         }
     }
 
@@ -117,6 +124,24 @@ public class MagneticObjectBehavior : MonoBehaviour
         Debug.Log("The object is moving toward the player");
     }
 
+    public void RotateObject(Vector2 thumbstickInput)
+    {
+        Vector3 controllerForward = _controllerTransform.forward;
+        Vector3 controllerUp = _controllerTransform.up;
+        Vector3 controllerRight = Vector3.Cross(controllerUp, controllerForward);
+
+        if (Mathf.Abs(thumbstickInput.y) > Mathf.Abs(thumbstickInput.x))
+        {
+            float rotationY = thumbstickInput.y * _rotationSpeed * Time.deltaTime;
+            transform.Rotate(controllerRight, rotationY, Space.World);
+        }
+        else if (Mathf.Abs(thumbstickInput.x) > Mathf.Abs(thumbstickInput.y))
+        {
+            float rotationX = -thumbstickInput.x * _rotationSpeed * Time.deltaTime;
+            transform.Rotate(controllerUp, rotationX, Space.World);
+        }
+    }
+
     public void ActivateAButton()
     {
         _isPressingA = true;
@@ -137,4 +162,13 @@ public class MagneticObjectBehavior : MonoBehaviour
         _isPressingB = false;
     }
 
+    public void ActivateObjectRotation()
+    {
+        _isRotating = true;
+    }
+
+    public void DeactivateObjectRotation()
+    {
+        _isRotating = false;
+    }
 }
