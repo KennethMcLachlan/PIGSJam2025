@@ -93,6 +93,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2DLOD_27284de8ad374266bbfe6e9b3e951048_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 0c35ecd08175570489cfe670c00838fe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2DLOD_92ff27bd278040cdac6fdb883cc2d164_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: f62f8e5d51fc4294f8df6efc71cc06e9, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -124,6 +128,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
+    - _Add_Object_Space: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -158,7 +163,8 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Ripple_Amount: 0.05
-    - _Ripple_Gradient_Size: 8.91
+    - _Ripple_Cutout_Size: 1
+    - _Ripple_Gradient_Size: 1
     - _Ripple_Scale: 2
     - _Ripple_Speed: 0.2
     - _Smoothness: 0.5
@@ -176,7 +182,8 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color_Overlay: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Ripple_Gradient_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Ripple_Cutout_Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Ripple_Gradient_Offset: {r: 0, g: -1.8, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

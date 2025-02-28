@@ -6,7 +6,9 @@ public class DoorTube : MonoBehaviour
     [Header("Environments")]
     [SerializeField] private DoorTube previousDoorTube;
     [SerializeField] private GameObject exitedRoom;
+    [Space(10)]
     [SerializeField] private GameObject enteredRoom;
+    [SerializeField] private DoorTube nextDoorTube;
     [Space(20)]
     [Header("Door Parts")]
     [SerializeField] private TubeDoor exitDoor;
@@ -87,6 +89,10 @@ public class DoorTube : MonoBehaviour
     {
         //open door to next room
         enteredRoom.SetActive(true);
+        if(nextDoorTube != null)
+        {
+            nextDoorTube.gameObject.SetActive(true);
+        }
         enterDoor.Open();
     }
     

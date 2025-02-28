@@ -28,7 +28,7 @@ public class LivingRoom : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(PlayerEntered), 3);
+            Invoke(nameof(PlayerEntered), 2);
         }
     }
 
@@ -47,6 +47,8 @@ public class LivingRoom : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
+        yield return new WaitForSeconds(1f);
+
         foodTube.EnableTube();
 
         yield return null;
@@ -54,9 +56,9 @@ public class LivingRoom : MonoBehaviour
     #endregion
 
     #region Room Progression
-    //check if all mouths are fed
     public void MouthFed()
     {
+        //check if all mouths are fed
         bool allMouthsFed = true;
         for(int i = 0; i<mouths.Length; i++)
         {
@@ -75,7 +77,7 @@ public class LivingRoom : MonoBehaviour
     //configure room for exit
     public void RoomComplete()
     {
-        StartCoroutine (ExitSequence());
+        StartCoroutine(ExitSequence());
     }
     private IEnumerator ExitSequence()
     {
