@@ -3672,8 +3672,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04b54a6894072144939931905c8e1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnVelocity: 0
+  cooldownTime: 0
   ball: {fileID: 8287228139858168363, guid: dd4279967455e4b4a90846ad0eedc0d7, type: 3}
-  startVelocity: {x: 0, y: 0, z: 0}
+  spawnPosition: {fileID: 0}
+  tubeAnim: {fileID: 0}
+  launchSound: {fileID: 0}
+  enabledSound: {fileID: 0}
   testSpawnBall: 1
 --- !u!4 &1362788534
 Transform:
