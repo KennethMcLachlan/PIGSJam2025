@@ -1,7 +1,7 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 
 public class MagnetRayBehavior : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class MagnetRayBehavior : MonoBehaviour
     public InputActionReference moveTowardAction; // A Button
     public InputActionReference actionSwap; // Grip Button
     public InputActionReference rightStickAction; //Right Joystick
-    private Vector2 _rightStickInput;
 
 
     //Raycast Variables
@@ -22,27 +21,17 @@ public class MagnetRayBehavior : MonoBehaviour
 
     private bool _isActionPressed;
     private bool _isHoldingObject;
-    private bool _isSwappingAction;
+    private bool _isPressingA;
+    private bool _isPressingB;
 
     private MagneticObjectBehavior _currentMagneticObject; //Cache Reference
 
-    [SerializeField] private ContinuousTurnProvider _continuousTurnProvider;
-    [SerializeField] private SnapTurnProvider _snapTurnProvider;
+    //Object Manipulation States
+    private enum InteractionMode { Move, RotateHorizontal, RotateVertical }
+    private InteractionMode _currentMode = InteractionMode.Move;
     private void Start()
     {
         EnableInputActions();
-
-        if (_continuousTurnProvider == null)
-        {
-            _continuousTurnProvider = GameObject.Find("XR Origin (XR Rig)/Locomotion/Turn")?.GetComponent<ContinuousTurnProvider>();
-            Debug.Log("ContinuousTurnProvider Was Null and reassigned");
-        }
-
-        if (_snapTurnProvider == null)
-        {
-            _snapTurnProvider = GameObject.Find("XR Origin (XR Rig)/Locomotion/Turn")?.GetComponent<SnapTurnProvider>();
-            Debug.Log("SnapTurnProvider Was Null and reassigned");
-        }
     }
 
     private void Update()
@@ -51,14 +40,42 @@ public class MagnetRayBehavior : MonoBehaviour
         if (_isActionPressed == true && _isHoldingObject == false)
         {
             FireMagnetRay();
-            Debug.Log("Trigger Button is being held");
         }
 
-        //Rotates the Magnetized Object ---- Need something to prevent object rotation
-        _rightStickInput = rightStickAction.action.ReadValue<Vector2>();
-        if (_isHoldingObject == true && _currentMagneticObject != null && _currentMagneticObject._isRotating == true)
+        if (_isHoldingObject == true && _currentMagneticObject != null)
         {
-            _currentMagneticObject.RotateObject(_rightStickInput);
+            if (_isPressingA == true)
+            {
+                switch (_currentMode)
+                {
+                    case InteractionMode.Move:
+                        _currentMagneticObject.TowardMovement();
+                        Debug.Log("InteractionMode.Move is active");
+                        break;
+                    case InteractionMode.RotateHorizontal:
+                        _currentMagneticObject.RotateRight();
+                        break;
+                    case InteractionMode.RotateVertical:
+                        _currentMagneticObject.RotateDown();
+                        break;
+                }
+            }
+
+            if (_isPressingB == true)
+            {
+                switch (_currentMode)
+                {
+                    case InteractionMode.Move:
+                        _currentMagneticObject.AwayMovement();
+                        break;
+                    case InteractionMode.RotateHorizontal:
+                        _currentMagneticObject.RotateLeft();
+                        break;
+                    case InteractionMode.RotateVertical:
+                        _currentMagneticObject.RotateUp();
+                        break;
+                }
+            }
         }
     }
 
@@ -75,9 +92,8 @@ public class MagnetRayBehavior : MonoBehaviour
                 _currentMagneticObject = magneticObject;
                 _currentMagneticObject.AttachToMagnet(_hitInfo.point, transform);
                 _currentMagneticObject.InitiateSway();
-
-                _isSwappingAction = false;
                 _isHoldingObject = true;
+
                 Debug.Log("Magnetic Object has attached to Right COntroller");
             }
         }
@@ -85,33 +101,17 @@ public class MagnetRayBehavior : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * _rayDistance, Color.red,3f);
     }
 
-    //Deactivate Turning
-    private void DeactivatePlayerTurning()
-    {
-        _continuousTurnProvider.turnSpeed = 0;
-        _snapTurnProvider.turnAmount = 0;
-    }
-
-    private void ReactivatePlayerTurning()
-    {
-        _continuousTurnProvider.turnSpeed = 180;
-        _snapTurnProvider.turnAmount = 45;
-    }
-
     //private void OnDestroy()
     //{
     //    magnetAction.action.started -= MagnetActionStarted;
-    //    //magnetAction.action.performed -= MagnetActionHeld;
     //    magnetAction.action.canceled -= MagnetActionReleased;
     //    magnetAction.action.Disable();
 
     //    moveAwayAction.action.started -= AwayActionStarted;
-    //    //moveAwayAction.action.performed -= AwayActionPerformed;
     //    moveAwayAction.action.canceled -= AwayActionCanceled;
     //    moveAwayAction.action.Disable();
 
     //    moveTowardAction.action.started -= TowardActionStarted;
-    //    //moveTowardAction.action.performed -= TowardActionPerformed;
     //    moveTowardAction.action.canceled -= TowardActionCanceled;
     //    moveTowardAction.action.Disable();
 
@@ -126,25 +126,21 @@ public class MagnetRayBehavior : MonoBehaviour
     {
         magnetAction.action.Enable();
         magnetAction.action.started += MagnetActionStarted;
-        //magnetAction.action.performed += MagnetActionHeld;
         magnetAction.action.canceled += MagnetActionReleased;
 
 
         moveAwayAction.action.Enable();
         moveAwayAction.action.started += AwayActionStarted;
-        //moveAwayAction.action.performed += AwayActionPerformed;
         moveAwayAction.action.canceled += AwayActionCanceled;
 
         moveTowardAction.action.Enable();
         moveTowardAction.action.started += TowardActionStarted;
-        //moveTowardAction.action.performed += TowardActionPerformed;
         moveTowardAction.action.canceled += TowardActionCanceled;
 
         actionSwap.action.Enable();
         actionSwap.action.performed += SwapAction;
 
         rightStickAction.action.Enable();
-        //rightStickAction.action.performed += ThumbStickInput;
 
         if (moveAwayAction.action == null)
         {
@@ -152,38 +148,17 @@ public class MagnetRayBehavior : MonoBehaviour
         }
     }
 
-    //InputAction to Rotate Object
-    //private void ThumbStickInput(InputAction.CallbackContext context)
-    //{
-    //    _rightStickInput = context.ReadValue<Vector2>();
-
-    //    if (_isHoldingObject == true && _currentMagneticObject != null)
-    //    {
-    //        _currentMagneticObject.RotateObject(_rightStickInput);
-    //    }
-    //}
-
+    //Grip Button
     private void SwapAction(InputAction.CallbackContext context)
     {
         //Change the function between magnet object movement and rotation
-        Debug.Log("Grip Button has Been pressed");
-        if (_isHoldingObject == true)
+        if (_isHoldingObject == false)
         {
-            _isSwappingAction = !_isSwappingAction;
-
-            if (_isSwappingAction == true)
-            {
-                _currentMagneticObject.ActivateObjectRotation();
-                DeactivatePlayerTurning();
-            }
-
-            if (_isSwappingAction == false)
-            {
-                _currentMagneticObject.DeactivateObjectRotation();
-                ReactivatePlayerTurning();
-            }
+            return;
         }
-        
+
+        _currentMode = (InteractionMode)(((int)_currentMode + 1) % 3);
+        Debug.Log($"Interaction Mode Changed: {_currentMode}");
     }
 
     //Trigger Button
@@ -191,25 +166,16 @@ public class MagnetRayBehavior : MonoBehaviour
     {
         if (_isActionPressed == false)
         {
-            Debug.Log("Grip has been pressed");
             _isActionPressed = true;
         }
     }
-
-    //private void MagnetActionHeld(InputAction.CallbackContext context)
-    //{
-    //    //Decided to not use this
-    //    //May save for later
-    //}
 
     private void MagnetActionReleased(InputAction.CallbackContext context)
     {
         if (_isActionPressed == true)
         {
-            Debug.Log("Grip Button was released");
             _isActionPressed = false;
             _isHoldingObject = false;
-            ReactivatePlayerTurning();
 
             if (_currentMagneticObject != null)
             {
@@ -223,49 +189,24 @@ public class MagnetRayBehavior : MonoBehaviour
     //A Button
     private void TowardActionStarted(InputAction.CallbackContext context)
     {
-        if (_isHoldingObject == true && _currentMagneticObject != null)
-        {
-            _currentMagneticObject.ActivateAButton();
-            Debug.Log("A Button is being pressed");
-        }
+        _isPressingA = true;
     }
     private void TowardActionCanceled(InputAction.CallbackContext context)
     {
-        if (_currentMagneticObject != null)
-        {
-            _currentMagneticObject?.DeactivateAButton();
-            Debug.Log("A Button has been released");
-        }
+        _isPressingA = false;
+        _currentMagneticObject?.StopMovementOrRotation();
     }
-
-    //private void TowardActionPerformed(InputAction.CallbackContext context)
-    //{
-    //    throw new System.NotImplementedException();
-    //}
-
 
     //B Button
     private void AwayActionStarted(InputAction.CallbackContext context)
     {
-        if (_isHoldingObject == true && _currentMagneticObject != null)
-        {
-            _currentMagneticObject.ActivateBButton();
-            Debug.Log("B Button is being pressed");
-        }
+        _isPressingB = true;
     }
-
-    //private void AwayActionPerformed(InputAction.CallbackContext context)
-    //{
-    //    throw new System.NotImplementedException();
-    //}
 
     private void AwayActionCanceled(InputAction.CallbackContext context)
     {
-        if (_currentMagneticObject != null)
-        {
-            _currentMagneticObject!.DeactivateBButton();
-            Debug.Log("B Button has been released");
-        }
+        _isPressingB = false;
+        _currentMagneticObject?.StopMovementOrRotation();
     }
 
 }

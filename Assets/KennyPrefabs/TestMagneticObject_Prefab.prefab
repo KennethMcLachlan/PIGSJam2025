@@ -150,7 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
+  _objectMoveSpeed: 1
   _swayForce: 0.1
   _damping: 0.01
-  _rotationSpeed: 100
+  _rotationSpeed: 1
   _isRotating: 0
