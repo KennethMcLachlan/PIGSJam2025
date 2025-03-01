@@ -4,104 +4,62 @@ using UnityEngine.Events;
 
 public class MagnetDevice : MonoBehaviour
 {
-#if UNITY_EDITOR
     #region Testing
+#if UNITY_EDITOR
     [Header("Testing")]
-    [SerializeField] private bool testMagnetize;
-    [SerializeField] private bool testStopMagnetizing;
+    [SerializeField] private bool testTriggerButton;
     [Space(10)]
-    [SerializeField] private bool testMoveForward;
-    [SerializeField] private bool testMoveBackward;
+    [SerializeField] private bool testGripButton;
     [Space(10)]
-    [SerializeField] private bool testRotateForward;
-    [SerializeField] private bool testRotateBackward;
-    [SerializeField] private bool testRotateRight;
-    [SerializeField] private bool testRotateLeft;
-    [SerializeField] private bool testRotateClockwise;
-    [SerializeField] private bool testRotateCounterClockwise;
+    [SerializeField] private bool testUpButton;
+    [SerializeField] private bool testDownButton;
     [Space(10)]
-    [SerializeField] private bool testStopInputting;
+    [SerializeField] private bool testButtonReleased;
 
     private void Update()
     {
-        #region Test Magnetizing
-        if (testMagnetize)
+        if (testTriggerButton)
         {
-            TryMagnetize();
-            testMagnetize = false;
+            TriggerToggleMagnetize();
+            testTriggerButton = false;
         }
-        if (testStopMagnetizing)
+        if (testGripButton)
         {
-            TryStopMagnetizing();
-            testStopMagnetizing = false;
+            GripCycleMode();
+            testGripButton = false;
         }
-        #endregion
-
-        #region Test Movement
-        if (testMoveForward)
+        if (testUpButton)
         {
-            TryMove(true);
-            testMoveForward = false;
+            ButtonPressed(true);
+            testUpButton = false;
         }
-        if (testMoveBackward)
+        if (testDownButton)
         {
-            TryMove(false);
-            testMoveBackward = false;
+            ButtonPressed(false);
+            testDownButton = false;
         }
-        #endregion
-
-        #region Test Rotation
-        if (testRotateForward)
+        if (testButtonReleased)
         {
-            TryRotate(RotationDirection.Forward);
-            testRotateForward = false;
-        }
-        if (testRotateBackward)
-        {
-            TryRotate(RotationDirection.Backward);
-            testRotateBackward = false;
-        }
-        if (testRotateRight)
-        {
-            TryRotate(RotationDirection.Right);
-            testRotateRight = false;
-        }
-        if (testRotateLeft)
-        {
-            TryRotate(RotationDirection.Left);
-            testRotateLeft = false;
-        }
-        if (testRotateClockwise)
-        {
-            TryRotate(RotationDirection.Clockwise);
-            testRotateClockwise = false;
-        }
-        if (testRotateCounterClockwise)
-        {
-            TryRotate(RotationDirection.CounterClockwise);
-            testRotateCounterClockwise = false;
-        }
-        #endregion
-
-        if (testStopInputting)
-        {
-            TryStopInput();
-            testStopInputting = false;
+            ButtonReleased();
+            testButtonReleased = false;
         }
     }
     [Space(30)]
-    #endregion
 #endif
+    #endregion
 
     #region Variables & References
     [Header("Runtime Variables")]
     [SerializeField] private bool magnetizing;
+    [SerializeField] private ManipulationMode activeMode;
+    [Space(10)]
     [SerializeField] private Collider detectedCollider;
     [SerializeField] private MagneticObject magnetizedObject;
     private Rigidbody magnetizedRB;
     [Space(20)]
     [Header("Magnetizing")]
     [SerializeField] private Transform targetPoint;
+    [SerializeField] private Transform rotationOrientation;
     [Space(10)]
     [SerializeField] private float positionalStrength;
     [SerializeField] private float rotationalStrength;
@@ -109,6 +67,9 @@ public class MagnetDevice : MonoBehaviour
     [SerializeField] private float maxTargetMovementTime;
     [SerializeField] private float maxTargetDistance;
     [SerializeField] private float minTargetDistance;
+    [Space(10)]
+    [SerializeField] private int activeModeIndex;
+    [SerializeField] private ManipulationMode[] manipulationModes;
     [Space(20)]
     [Header("Raycasting")]
     [SerializeField] private float raycastRate;
@@ -116,13 +77,15 @@ public class MagnetDevice : MonoBehaviour
     [SerializeField] private LayerMask raycastMask;
     [SerializeField] private Transform raycastOrigin;
     [Space(20)]
-    [Header("Events")]
+    [Header("Object Detection Events")]
     [SerializeField] private UnityEvent objectDetected;
     [SerializeField] private UnityEvent objectLost;
-    [Space(10)]
+    [Header("Magnetize Events")]
+    [SerializeField] private UnityEvent failedMagnetize;
     [SerializeField] private UnityEvent objectMagnetized;
     [SerializeField] private UnityEvent objectReleased;
-    [Space(10)]
+    [Header("Mode Events")]
+    [SerializeField] private UnityEvent modeCycled;
     [SerializeField] private UnityEvent moveModeSet;
     [SerializeField] private UnityEvent rotateXModeSet;
     [SerializeField] private UnityEvent rotateYModeSet;
@@ -171,10 +134,94 @@ public class MagnetDevice : MonoBehaviour
         yield return new WaitForSeconds(raycastRate);
         yield return null;
     }
+    #endregion
 
-    public void TryMagnetize()
+    #region Player Inputs
+    public void TriggerToggleMagnetize()
     {
-        if (detectedCollider != null && !magnetizing)
+        if (!magnetizing)
+        {
+            TryMagnetize();
+        }
+        else
+        {
+            StopMagnetizing();
+        }
+    }
+
+    public void GripCycleMode()
+    {
+        if(magnetizing)
+        {
+            activeModeIndex += 1;
+            if(activeModeIndex == manipulationModes.Length)
+            {
+                activeModeIndex = 0;
+            }
+            activeMode = manipulationModes[activeModeIndex];
+            modeCycled.Invoke();
+            activeMode.modeSet.Invoke();
+        }
+    }
+
+    public void ButtonPressed(bool upButton)
+    {
+        if (magnetizing)
+        {
+            if(upButton)
+            {
+                activeMode.inputUp.Invoke();
+                if (activeMode.mode == Mode.RotateForward)
+                {
+                    Rotate(RotationDirection.Forward);
+                }
+                if (activeMode.mode == Mode.RotateSideways)
+                {
+                    Rotate(RotationDirection.Left);
+                }
+                if (activeMode.mode == Mode.RotateClockwise)
+                {
+                    Rotate(RotationDirection.CounterClockwise);
+                }
+            }
+            else
+            {
+                activeMode.inputDown.Invoke();
+                if (activeMode.mode == Mode.RotateForward)
+                {
+                    Rotate(RotationDirection.Backward);
+                }
+                if (activeMode.mode == Mode.RotateSideways)
+                {
+                    Rotate(RotationDirection.Right);
+                }
+                if (activeMode.mode == Mode.RotateClockwise)
+                {
+                    Rotate(RotationDirection.Clockwise);
+                }
+            }
+
+            if (activeMode.mode == Mode.Move)
+            {
+                Move(upButton);
+            }
+        }
+    }
+
+    public void ButtonReleased()
+    {
+        if (magnetizing)
+        {
+            StopAllCoroutines();
+        }
+    }
+    #endregion
+
+    #region Input Responses
+    private void TryMagnetize()
+    {
+        bool magnetizeFailed = true;
+        if (detectedCollider != null)
         {
             MagneticObject magneticObject = detectedCollider.GetComponentInParent<MagneticObject>();
             if (magneticObject != null)
@@ -187,33 +234,83 @@ public class MagnetDevice : MonoBehaviour
                 magnetizedObject.SetMagnetized(true);
 
                 objectMagnetized.Invoke();
+                magnetizeFailed = false;
 
                 StopAllCoroutines();
                 magnetizing = true;
             }
         }
-    }
-
-    public void TryStopMagnetizing()
-    {
-        if(magnetizing)
+        if(magnetizeFailed)
         {
-            magnetizedObject.SetMagnetized(false);
-            magnetizedObject = null;
-            magnetizedRB = null;
-
-            objectReleased.Invoke();
-
-            StopAllCoroutines();
-            StartCoroutine(CheckingForObjects());
+            failedMagnetize.Invoke();
         }
     }
 
+    private void StopMagnetizing()
+    {
+        magnetizedObject.SetMagnetized(false);
+        magnetizedObject = null;
+        magnetizedRB = null;
+        activeModeIndex = 0;
+
+        objectReleased.Invoke();
+
+        StopAllCoroutines();
+        StartCoroutine(CheckingForObjects());
+
+        magnetizing = false;
+    }
+
+    private void Move(bool forward)
+    {
+        if (magnetizing)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Moving(forward));
+        }
+    }
+
+    private void Rotate(RotationDirection direction)
+    {
+        if (magnetizing)
+        {
+            Vector3 rotationTorque = Vector3.zero;
+            if (direction == RotationDirection.Forward)
+            {
+                rotationTorque = rotationOrientation.right * rotationalStrength;
+            }
+            if (direction == RotationDirection.Backward)
+            {
+                rotationTorque = rotationOrientation.right * -rotationalStrength;
+            }
+            if (direction == RotationDirection.Right)
+            {
+                rotationTorque = rotationOrientation.up * rotationalStrength;
+            }
+            if (direction == RotationDirection.Left)
+            {
+                rotationTorque = rotationOrientation.up * -rotationalStrength;
+            }
+            if (direction == RotationDirection.Clockwise)
+            {
+                rotationTorque = rotationOrientation.forward * -rotationalStrength;
+            }
+            if (direction == RotationDirection.CounterClockwise)
+            {
+                rotationTorque = rotationOrientation.forward * rotationalStrength;
+            }
+            StopAllCoroutines();
+            StartCoroutine(Rotating(rotationTorque));
+        }
+    }
+    #endregion
+
+    #region Object Manipulation
     private void SetStartingTargetPosition(Vector3 grabbedPosition)
     {
         float distanceToObject = Vector3.Distance(raycastOrigin.position, grabbedPosition);
         float startingTargetDistance = 0;
-        if(distanceToObject > maxTargetDistance)
+        if (distanceToObject > maxTargetDistance)
         {
             startingTargetDistance = maxTargetDistance;
         }
@@ -230,62 +327,7 @@ public class MagnetDevice : MonoBehaviour
         }
         targetPoint.localPosition = new Vector3(0, 0, startingTargetDistance);
     }
-    #endregion
 
-    #region Controls
-    public void TryMove(bool forward)
-    {
-        if (magnetizing)
-        {
-            StopAllCoroutines();
-            StartCoroutine(Moving(forward));
-        }
-    }
-
-    public void TryRotate(RotationDirection direction)
-    {
-        if (magnetizing)
-        {
-            Vector3 rotationTorque = Vector3.zero;
-            if (direction == RotationDirection.Forward)
-            {
-                rotationTorque = targetPoint.right * rotationalStrength;
-            }
-            if (direction == RotationDirection.Backward)
-            {
-                rotationTorque = targetPoint.right * -rotationalStrength;
-            }
-            if (direction == RotationDirection.Right)
-            {
-                rotationTorque = targetPoint.up * rotationalStrength;
-            }
-            if (direction == RotationDirection.Left)
-            {
-                rotationTorque = targetPoint.up * -rotationalStrength;
-            }
-            if (direction == RotationDirection.Clockwise)
-            {
-                rotationTorque = targetPoint.forward * -rotationalStrength;
-            }
-            if (direction == RotationDirection.CounterClockwise)
-            {
-                rotationTorque = targetPoint.forward * rotationalStrength;
-            }
-            StopAllCoroutines();
-            StartCoroutine(Rotating(rotationTorque));
-        }
-    }
-
-    public void TryStopInput()
-    {
-        if(magnetizing)
-        {
-            StopAllCoroutines();
-        }
-    }
-    #endregion
-
-    #region Object Manipulation
     private void FixedUpdate()
     {
         if (magnetizing)
@@ -335,6 +377,24 @@ public class MagnetDevice : MonoBehaviour
     #endregion
 }
 
+#region Additional Classes
+[System.Serializable]
+public class ManipulationMode
+{
+    public Mode mode;
+    public UnityEvent modeSet;
+    public UnityEvent inputUp;
+    public UnityEvent inputDown;
+}
+
+public enum Mode
+{
+    Move,
+    RotateForward,
+    RotateSideways,
+    RotateClockwise
+}
+
 public enum RotationDirection
 {
     Forward,
@@ -344,3 +404,4 @@ public enum RotationDirection
     Clockwise,
     CounterClockwise
 }
+#endregion

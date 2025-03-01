@@ -228,7 +228,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3975326806161693653}
   - component: {fileID: 6770034196360021595}
-  - component: {fileID: 3409612953080396916}
   - component: {fileID: 1373567384241972984}
   m_Layer: 6
   m_Name: Straight Track Floating
@@ -269,31 +268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4cf39fea81c3e4481e6ffde7c84351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floating: 1
   rb: {fileID: 1373567384241972984}
-  defaultDamping: 4
-  magnetizedDamping: 30
   grabbed:
     m_PersistentCalls:
       m_Calls: []
   released:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3409612953080396916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1786910266227697705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985e6b60bf8defc4e8fb3f9f0ffb49f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  magneticObject: {fileID: 6770034196360021595}
-  rb: {fileID: 1373567384241972984}
-  grab: 0
-  release: 0
 --- !u!54 &1373567384241972984
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -302,7 +284,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786910266227697705}
   serializedVersion: 4
-  m_Mass: 8
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -315,7 +297,7 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 1
+  m_ImplicitTensor: 0
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0

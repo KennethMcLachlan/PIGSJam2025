@@ -29,7 +29,7 @@ public class FloatingDevice : MonoBehaviour
     #region Configuration
     private void Awake()
     {
-        magneticObject.SetDefaultDamping(4);
+        //magneticObject.SetDefaultDamping(4);
         rb.isKinematic = true;
         rb.useGravity = false;
     }
