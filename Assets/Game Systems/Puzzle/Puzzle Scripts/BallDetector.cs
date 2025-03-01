@@ -9,12 +9,12 @@ public class BallDetector : MonoBehaviour
 
     #region Debugging
     [Space(20)]
-    [SerializeField] private MeshRenderer debugMesh;
+    [SerializeField] private MeshRenderer[] debugMeshes;
     private void Awake()
     {
-        if(debugMesh!= null)
+        foreach (MeshRenderer renderer in debugMeshes)
         {
-            debugMesh.enabled = false;
+            renderer.enabled = false;
         }
     }
     #endregion

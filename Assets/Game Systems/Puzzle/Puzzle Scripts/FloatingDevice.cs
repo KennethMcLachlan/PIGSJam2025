@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class FloatingDevice : MonoBehaviour
 {
+    [SerializeField] private MagneticObject magneticObject;
     [SerializeField] private Rigidbody rb;
 
     #region Testing
+    [Space(20)]
+    [Header("Testing")]
     public bool grab;
     public bool release;
     private void Update()
@@ -20,6 +23,15 @@ public class FloatingDevice : MonoBehaviour
             Released();
             release = false;
         }
+    }
+    #endregion
+
+    #region Configuration
+    private void Awake()
+    {
+        magneticObject.SetDefaultDamping(4);
+        rb.isKinematic = true;
+        rb.useGravity = false;
     }
     #endregion
 
