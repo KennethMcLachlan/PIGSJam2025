@@ -4,58 +4,13 @@ using UnityEngine.Events;
 
 public class MagnetDevice : MonoBehaviour
 {
-    #region Testing
-    /*
-#if UNITY_EDITOR
-    [Header("Testing")]
-    [SerializeField] private bool testTriggerButton;
-    [Space(10)]
-    [SerializeField] private bool testGripButton;
-    [Space(10)]
-    [SerializeField] private bool testUpButton;
-    [SerializeField] private bool testDownButton;
-    [Space(10)]
-    [SerializeField] private bool testButtonReleased;
-
-    private void Update()
-    {
-        if (testTriggerButton)
-        {
-            TriggerToggleMagnetize();
-            testTriggerButton = false;
-        }
-        if (testGripButton)
-        {
-            GripCycleMode();
-            testGripButton = false;
-        }
-        if (testUpButton)
-        {
-            ButtonPressed(true);
-            testUpButton = false;
-        }
-        if (testDownButton)
-        {
-            ButtonPressed(false);
-            testDownButton = false;
-        }
-        if (testButtonReleased)
-        {
-            ButtonReleased();
-            testButtonReleased = false;
-        }
-    }
-    [Space(30)]
-#endif
-    */
-    #endregion
-
     #region Variables & References
     [Header("Runtime Variables")]
     [SerializeField] private bool magnetizing;
     [SerializeField] private ManipulationMode activeMode;
     [Space(10)]
-    [SerializeField] private Collider detectedCollider;
+    private Collider detectedCollider;
+    private bool detected;
     [SerializeField] private MagneticObject magnetizedObject;
     private Rigidbody magnetizedRB;
     [Space(20)]
@@ -106,6 +61,7 @@ public class MagnetDevice : MonoBehaviour
     private IEnumerator CheckingForObjects()
     {
         bool checking = true;
+        detected = false;
         while (checking)
         {
             RaycastHit hit;
@@ -114,9 +70,10 @@ public class MagnetDevice : MonoBehaviour
             {
                 Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * hit.distance, Color.green);
 
-                if (detectedCollider != hit.collider)
+                if (detectedCollider != hit.collider && !detected)
                 {
                     objectDetected.Invoke();
+                    detected = true;
                 }
 
                 detectedCollider = hit.collider;
@@ -125,9 +82,10 @@ public class MagnetDevice : MonoBehaviour
             {
                 Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * raycastDistance, Color.red);
 
-                if (detectedCollider != null)
+                if (detectedCollider != null && detected)
                 {
                     objectLost.Invoke();
+                    detected = false;
                 }
                 detectedCollider = null;
             }
@@ -161,6 +119,7 @@ public class MagnetDevice : MonoBehaviour
                 activeModeIndex = 0;
             }
             activeMode = manipulationModes[activeModeIndex];
+            magnetizedObject.SetRotationConstraints(activeMode.mode);
             modeCycled.Invoke();
             activeMode.modeSet.Invoke();
         }
@@ -233,7 +192,7 @@ public class MagnetDevice : MonoBehaviour
                 detectedCollider = null;
 
                 targetPoint.position = magnetizedObject.transform.position;
-                //SetStartingTargetPosition(magnetizedObject.transform.position);
+                magnetizedObject.SetRotationConstraints(activeMode.mode);
                 magnetizedObject.SetMagnetized(true);
 
                 objectMagnetized.Invoke();
@@ -252,6 +211,7 @@ public class MagnetDevice : MonoBehaviour
     private void StopMagnetizing()
     {
         magnetizedObject.SetMagnetized(false);
+        magnetizedObject.rb.constraints = RigidbodyConstraints.None;
         magnetizedObject = null;
         magnetizedRB = null;
         activeModeIndex = 0;
@@ -336,31 +296,6 @@ public class MagnetDevice : MonoBehaviour
     #endregion
 
     #region Object Manipulation
-    /*
-    private void SetStartingTargetPosition(Vector3 grabbedPosition)
-    {
-        targetPoint.position = grabbedPosition;
-        float distanceToObject = Vector3.Distance(raycastOrigin.position, grabbedPosition);
-        float startingTargetDistance = 0;
-        if (distanceToObject > maxTargetDistance)
-        {
-            startingTargetDistance = maxTargetDistance;
-        }
-        else
-        {
-            if (distanceToObject < minTargetDistance)
-            {
-                startingTargetDistance = minTargetDistance;
-            }
-            else
-            {
-                startingTargetDistance = Mathf.Lerp(minTargetDistance, maxTargetDistance, distanceToObject / (maxTargetDistance - minTargetDistance));
-            }
-        }
-        targetPoint.localPosition = new Vector3(0, 0, startingTargetDistance);
-    }
-    */
-
     private void FixedUpdate()
     {
         if (magnetizing)
@@ -391,6 +326,8 @@ public class MagnetDevice : MonoBehaviour
         {
             targetDistance = minTargetDistance;
         }
+        float xPosition = targetPoint.localPosition.x;
+        float yPosition = targetPoint.localPosition.y;
 
         float startingDistance = targetPoint.localPosition.z;
         float moveTime = maxTargetMovementTime * (Mathf.Abs(targetDistance - startingDistance) / (maxTargetDistance - minTargetDistance));
@@ -399,12 +336,12 @@ public class MagnetDevice : MonoBehaviour
 
         while (elapsedTime < moveTime)
         {
-            targetPoint.localPosition = new Vector3(0, 0, Mathf.Lerp(startingDistance, targetDistance, elapsedTime/moveTime));
+            targetPoint.localPosition = new Vector3(xPosition, yPosition, Mathf.Lerp(startingDistance, targetDistance, elapsedTime/moveTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        targetPoint.localPosition = new Vector3 (0, 0, targetDistance);
+        targetPoint.localPosition = new Vector3 (xPosition, yPosition, targetDistance);
         yield return null;
     }
     #endregion
@@ -418,6 +355,9 @@ public class ManipulationMode
     public UnityEvent modeSet;
     public UnityEvent inputUp;
     public UnityEvent inputDown;
+    public bool freezeXRot;
+    public bool freezeYRot;
+    public bool freezeZRot;
 }
 
 public enum Mode

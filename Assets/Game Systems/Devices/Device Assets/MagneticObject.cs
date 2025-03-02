@@ -12,7 +12,7 @@ public class MagneticObject : MonoBehaviour
     [SerializeField] private UnityEvent released;
 
     private float defaultDamping = 0.05f;
-    private float defaultFloatDamping = 8f;
+    //private float defaultFloatDamping = 8f;
     private float magnetizedDamping = 30f;
 
     private void Awake()
@@ -20,8 +20,28 @@ public class MagneticObject : MonoBehaviour
         if(floatBase != null)
         {
             rb.isKinematic = true;
-            rb.linearDamping = defaultFloatDamping;
-            rb.angularDamping = defaultFloatDamping;
+            //rb.linearDamping = defaultFloatDamping;
+            //rb.angularDamping = defaultFloatDamping;
+        }
+    }
+
+    public void SetRotationConstraints(Mode mode)
+    {
+        if (mode == Mode.Move)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        if (mode == Mode.RotateClockwise)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+        }
+        if (mode == Mode.RotateSideways)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        }
+        if (mode == Mode.RotateForward)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
     }
 
@@ -42,16 +62,21 @@ public class MagneticObject : MonoBehaviour
         }
         else
         {
-            if(floatBase == null)
+            rb.constraints = RigidbodyConstraints.None;
+
+            if (floatBase == null)
             {
                 rb.linearDamping = defaultDamping;
                 rb.angularDamping = defaultDamping;
             }
             else
             {
-                rb.linearDamping = defaultFloatDamping;
-                rb.angularDamping = defaultFloatDamping;
-                StartCoroutine(LockingFloatPosition());
+                //rb.linearDamping = defaultFloatDamping;
+                //rb.angularDamping = defaultFloatDamping;
+
+                floatBase.SetFloating(true);
+                rb.isKinematic = true;
+                //StartCoroutine(LockingFloatPosition());
             }
         }
     }
