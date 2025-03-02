@@ -13,6 +13,5 @@ public class Treadmill : MonoBehaviour
     {
         BallCreature ball = detector.ball;
         ball.rb.linearVelocity = treadmillStrength * launchDirection.forward;
-        ball.BallHit();
     }
 }

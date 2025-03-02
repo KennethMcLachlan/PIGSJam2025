@@ -19,4 +19,9 @@ public class RandomizedSound : MonoBehaviour
         soundSource.clip = clips[Random.Range(0, clips.Length)];
         soundSource.Play();
     }
+
+    public void StopSound()
+    {
+        soundSource.Stop();
+    }
 }

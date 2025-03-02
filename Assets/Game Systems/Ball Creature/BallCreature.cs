@@ -9,11 +9,10 @@ public class BallCreature : MonoBehaviour
     [SerializeField] private BallDetector detector;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip[] launchClips;
-    [SerializeField] private AudioClip[] hitClips;
-    [SerializeField] private AudioClip[] eatenClips;
-    [SerializeField] private AudioClip[] burstClips;
-    [SerializeField] private AudioSource ballAudio;
+    [SerializeField] private RandomizedSound screamSound;
+    [SerializeField] private RandomizedSound hitSound;
+    [SerializeField] private RandomizedSound burstSound;
+    [SerializeField] private RandomizedSound eatenSound;
 
     [Header("References")]
     public Rigidbody rb;
@@ -27,7 +26,7 @@ public class BallCreature : MonoBehaviour
     {
         rb.isKinematic = false;
         landed = false;
-        BallLaunched();
+        screamSound.PlaySound();
     }
     private void FixedUpdate()
     {
@@ -43,6 +42,8 @@ public class BallCreature : MonoBehaviour
             detector = collision.collider.GetComponentInParent<BallDetector>();
             if (detector != null)
             {
+                hitSound.PlaySound();
+                screamSound.PlaySound();
                 detector.BallDetected(this);
             }
             else
@@ -113,7 +114,10 @@ public class BallCreature : MonoBehaviour
             ballColl.enabled = false;
             rb.isKinematic = true;
             ballMesh.enabled = false;
-            PlayClip(burstClips);
+
+            screamSound.StopSound();
+            burstSound.PlaySound();
+
             burstParticles.Play();
             yield return new WaitForSeconds(6);
             Destroy(this.gameObject);
@@ -125,31 +129,12 @@ public class BallCreature : MonoBehaviour
     {
         landed = true;
         yield return new WaitForSeconds(0.1f);
+        rb.isKinematic = true;
+        screamSound.StopSound();
+        burstSound.PlaySound();
+        yield return new WaitForSeconds(0.7f);
         Destroy(this.gameObject);
         yield return null;
-    }
-    #endregion
-
-    #region Audio
-    public void BallLaunched()
-    {
-        PlayClip(launchClips);
-    }
-    public void BallHit()
-    {
-        PlayClip(hitClips);
-    }
-    public void BallEaten()
-    {
-        PlayClip(eatenClips);
-    }
-
-    private void PlayClip(AudioClip[] audioClips)
-    {
-        ballAudio.Stop();
-        ballAudio.pitch = Random.Range(0.85f, 1.15f);
-        ballAudio.clip = audioClips[Random.Range(0, audioClips.Length)];
-        ballAudio.Play();
     }
     #endregion
 }

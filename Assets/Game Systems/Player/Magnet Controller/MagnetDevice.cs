@@ -281,7 +281,6 @@ public class MagnetDevice : MonoBehaviour
             if (direction == RotationDirection.Forward)
             {
                 rotationTorque = magnetizedObject.transform.right * rotationalStrength;
-                //rotationTorque = rotationOrientation.right * rotationalStrength;
             }
             if (direction == RotationDirection.Backward)
             {
@@ -337,6 +336,7 @@ public class MagnetDevice : MonoBehaviour
     #endregion
 
     #region Object Manipulation
+    /*
     private void SetStartingTargetPosition(Vector3 grabbedPosition)
     {
         targetPoint.position = grabbedPosition;
@@ -359,6 +359,7 @@ public class MagnetDevice : MonoBehaviour
         }
         targetPoint.localPosition = new Vector3(0, 0, startingTargetDistance);
     }
+    */
 
     private void FixedUpdate()
     {

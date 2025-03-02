@@ -3,64 +3,36 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField] private float transitionInterval;
-    [SerializeField] private float fadeInDuration;
-    [SerializeField] private AudioSource[] stems;
-    [SerializeField] private float targetVolume;
+    [SerializeField] private int roomIndex;
+    [SerializeField] private RoomStemSet[] stemSets;
+    private RoomStemSet activeStemSet;
 
-    #region Testing
-    public int testStemToEnable;
-    public bool testEnableStem;
-    private void Update()
+    public void StartRoomMusic()
     {
-        if (testEnableStem)
+        activeStemSet = stemSets[roomIndex];
+        foreach(Stem persistentStem in activeStemSet.persistentStems)
         {
-            EnableStem(testStemToEnable);
-            testEnableStem = false;
+            persistentStem.SetStemEnabled(true);
         }
-    }
-    #endregion
-
-    private void Start()
-    {
-        foreach(AudioSource stem in stems)
+        foreach (Stem roomStem in activeStemSet.roomStems)
         {
-            stem.volume = 0;
-            stem.Play();
+            roomStem.SetStemEnabled(true);
         }
     }
 
-    public void EnableStem(int stemIndex)
+    public void FadeRoomMusic()
     {
-        StartCoroutine(EnablingStem(stems[stemIndex]));
-    }
-
-    private IEnumerator EnablingStem(AudioSource stem)
-    {
-        //find interval point
-        bool stemPlaying = false;
-        while(!stemPlaying)
+        foreach (Stem roomStem in activeStemSet.roomStems)
         {
-            if(Time.timeSinceLevelLoad % transitionInterval < 0.02f)
-            {
-                stemPlaying = true;
-            }
-            else
-            {
-                yield return null;
-            }
+            roomStem.SetStemEnabled(false);
         }
-
-        //fade in stem
-        float elapsedTime = 0;
-        while(elapsedTime < fadeInDuration)
-        {
-            stem.volume = Mathf.Lerp(0, targetVolume, elapsedTime / fadeInDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        Debug.Log(stem.clip.name + " Stem Enabled");
-        stem.volume = targetVolume;
-        yield return null;
+        roomIndex += 1;
     }
+}
+
+[System.Serializable]
+public class RoomStemSet
+{
+    public Stem[] persistentStems;
+    public Stem[] roomStems;
 }

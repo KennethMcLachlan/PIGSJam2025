@@ -13,7 +13,6 @@ public class Spring : MonoBehaviour
     {
         BallCreature ball = detector.ball;
         ball.rb.AddForce(springStrength * transform.up);
-        ball.BallHit();
         springAnim.SetTrigger("Bounce");
     }
 }

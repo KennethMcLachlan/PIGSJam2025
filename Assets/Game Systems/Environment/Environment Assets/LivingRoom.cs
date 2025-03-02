@@ -13,11 +13,13 @@ public class LivingRoom : MonoBehaviour
     [SerializeField] private Mouth[] mouths;
     [Space(10)]
     [SerializeField] private DoorTube exitDoorTube;
+    private MusicManager musicManager;
     #endregion
 
     #region Configuration
     private void Start()
     {
+        musicManager = FindFirstObjectByType<MusicManager>();
         if (!firstRoom)
         {
             this.gameObject.SetActive(false);
@@ -39,15 +41,19 @@ public class LivingRoom : MonoBehaviour
     }
     private IEnumerator EnterSequence()
     {
+        musicManager.StartRoomMusic();
+
         yield return new WaitForSeconds(1f);
 
-        for(int i = 0; i< mouths.Length; i++)
+        foodTube.EnableTube();
+
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i< mouths.Length; i++)
         {
             mouths[i].OpenMouth();
             yield return new WaitForSeconds(1f);
         }
-
-        foodTube.EnableTube();
 
         yield return null;
     }
@@ -79,6 +85,7 @@ public class LivingRoom : MonoBehaviour
     }
     private IEnumerator ExitSequence()
     {
+        musicManager.FadeRoomMusic();
         foodTube.DisableTube();
         yield return new WaitForSeconds(3f);
         exitDoorTube.OpenExit();

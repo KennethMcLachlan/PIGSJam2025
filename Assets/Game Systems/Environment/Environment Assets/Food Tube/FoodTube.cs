@@ -43,7 +43,7 @@ public class FoodTube : MonoBehaviour
     public void EnableTube()
     {
         tubeEnabled = true;
-        //enabledSound.Play();
+        enabledSound.PlaySound();
         tubeAnim.SetBool("Enabled", true);
         FindFirstObjectByType<LanternDevice>().SetActiveFoodTube(this);
     }
@@ -63,6 +63,7 @@ public class FoodTube : MonoBehaviour
     {
         cooldown = false;
         tubeAnim.SetBool("Cooldown", false);
+        enabledSound.PlaySound();
     }
 
     public void DisableTube()

@@ -27,7 +27,6 @@ public class Catapult : MonoBehaviour
             balls.Add(detectedBall);
         }
         detectedBall.transform.parent = cradle;
-        detectedBall.BallHit();
     }
 
     public void LaunchBall()
@@ -38,7 +37,6 @@ public class Catapult : MonoBehaviour
         {
             balls[i].transform.parent = null;
             balls[i].rb.linearVelocity = force;
-            balls[i].BallLaunched();
         }
 
         balls.Clear();

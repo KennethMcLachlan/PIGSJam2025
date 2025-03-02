@@ -20,14 +20,14 @@ public class Mouth : MonoBehaviour
         closedCollider.gameObject.SetActive(false);
         mouthAnim.SetBool("Open", true);
         openCollider.gameObject.SetActive(true);
-        //openSound.PlaySound();
+        openSound.PlaySound();
     }
 
     public void MouthFed()
     {
         mouthAnim.SetBool("Open", false);
         Invoke(nameof(MouthClosed), 0.2f);
-        //closeSound.PlaySound();
+        closeSound.PlaySound();
         fed = true;
         room.MouthFed();
     }
