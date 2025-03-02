@@ -28,7 +28,7 @@ public class LivingRoom : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(PlayerEntered), 2);
+            Invoke(nameof(PlayerEntered), 1.5f);
         }
     }
 
@@ -39,15 +39,13 @@ public class LivingRoom : MonoBehaviour
     }
     private IEnumerator EnterSequence()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         for(int i = 0; i< mouths.Length; i++)
         {
             mouths[i].OpenMouth();
             yield return new WaitForSeconds(1f);
         }
-
-        yield return new WaitForSeconds(1f);
 
         foodTube.EnableTube();
 

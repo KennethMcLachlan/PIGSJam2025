@@ -11,7 +11,7 @@ public class Treadmill : MonoBehaviour
 
     public void TreadmillBounce()
     {
-        FoodBall ball = detector.ball;
+        BallCreature ball = detector.ball;
         ball.rb.linearVelocity = treadmillStrength * launchDirection.forward;
         ball.BallHit();
     }

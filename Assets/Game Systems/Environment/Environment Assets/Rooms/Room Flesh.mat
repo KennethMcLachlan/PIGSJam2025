@@ -162,7 +162,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Ripple_Amount: 0.15
+    - _Ripple_Amount: 0.1
     - _Ripple_Cutout_Size: 1
     - _Ripple_Gradient_Size: 1
     - _Ripple_Scale: 2

@@ -22,6 +22,8 @@ public class PlayerInputs : MonoBehaviour
     private InputAction downButton;
     [SerializeField] private UnityEvent downButtonPressed;
     [SerializeField] private UnityEvent downButtonReleased;
+    private InputAction lanternButton;
+    [SerializeField] private UnityEvent lanternButtonPressed;
     #endregion
 
     #region Configuration
@@ -55,6 +57,11 @@ public class PlayerInputs : MonoBehaviour
         downButton.Enable();
         downButton.started += DownButtonPressed;
         downButton.canceled += DownButtonReleased;
+
+        //lantern button
+        lanternButton = playerControls.RightHandedPlayerControls.LanternButton;
+        lanternButton.Enable();
+        lanternButton.started += LanternButtonPressed;
     }
 
     private void OnDisable()
@@ -63,6 +70,7 @@ public class PlayerInputs : MonoBehaviour
         grip.Disable();
         upButton.Disable();
         downButton.Disable();
+        lanternButton.Disable();
     }
     #endregion
 
@@ -101,6 +109,11 @@ public class PlayerInputs : MonoBehaviour
     private void DownButtonReleased(InputAction.CallbackContext context)
     {
         downButtonReleased.Invoke();
+    }
+
+    private void LanternButtonPressed(InputAction.CallbackContext context)
+    {
+        lanternButtonPressed.Invoke();
     }
     #endregion
 }

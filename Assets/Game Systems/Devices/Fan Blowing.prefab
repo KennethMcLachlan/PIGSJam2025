@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e76f05fa07e99549b86d9af7599f429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fanStrength: 30
+  fanStrength: 50
   fanDirection: {fileID: 3595392904729944738}
   detector: {fileID: 1872886468278921412}
 --- !u!95 &1536064104864533244
@@ -1057,7 +1057,6 @@ GameObject:
   - component: {fileID: 4250480799297279337}
   - component: {fileID: 4135975899075489262}
   - component: {fileID: 7544994236218729706}
-  - component: {fileID: 8385047358407768221}
   - component: {fileID: 5183233563746316245}
   m_Layer: 6
   m_Name: Cylinder
@@ -1134,50 +1133,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8385047358407768221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6289011669085081905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a201aa83fdac447bbf60cf5031cbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  ballDetected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Fan, Assembly-CSharp
-        m_MethodName: BallEnteredFan
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  ballLost:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Fan, Assembly-CSharp
-        m_MethodName: BallExitedFan
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  debugMeshes: []
 --- !u!64 &5183233563746316245
 MeshCollider:
   m_ObjectHideFlags: 0

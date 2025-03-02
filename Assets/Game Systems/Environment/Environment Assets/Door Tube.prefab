@@ -54,6 +54,7 @@ MonoBehaviour:
   previousDoorTube: {fileID: 0}
   exitedRoom: {fileID: 0}
   enteredRoom: {fileID: 0}
+  nextDoorTube: {fileID: 0}
   exitDoor: {fileID: 873915433938975107}
   tubeExtenstion: {fileID: 7094769889998095455}
   enterDoor: {fileID: 741815329295439993}
@@ -494,7 +495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2113831914131395297
 Transform:
   m_ObjectHideFlags: 0
@@ -1358,7 +1359,7 @@ Transform:
   m_GameObject: {fileID: 4407866470088937831}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70658076, z: -0, w: 0.7076324}
-  m_LocalPosition: {x: 11.6, y: 0, z: 0.02}
+  m_LocalPosition: {x: 11.28, y: 0, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

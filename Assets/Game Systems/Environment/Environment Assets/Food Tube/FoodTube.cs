@@ -10,7 +10,7 @@ public class FoodTube : MonoBehaviour
     private bool cooldown;
     [Space(20)]
     [Header("References")]
-    [SerializeField] private FoodBall ball;
+    [SerializeField] private BallCreature ball;
     [SerializeField] private Transform spawnPosition;
     [Space(10)]
     [SerializeField] private Animator tubeAnim;
@@ -45,6 +45,7 @@ public class FoodTube : MonoBehaviour
         tubeEnabled = true;
         //enabledSound.Play();
         tubeAnim.SetBool("Enabled", true);
+        FindFirstObjectByType<LanternDevice>().SetActiveFoodTube(this);
     }
 
     public void LaunchBall()

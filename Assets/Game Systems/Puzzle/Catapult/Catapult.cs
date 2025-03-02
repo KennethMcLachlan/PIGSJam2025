@@ -9,8 +9,8 @@ public class Catapult : MonoBehaviour
     [Space(20)]
     [SerializeField] private BallDetector detector;
     [SerializeField] private Transform cradle;
-    [SerializeField] private List<FoodBall> balls;
-    [SerializeField] private List<FoodBall> launchedBalls;
+    [SerializeField] private List<BallCreature> balls;
+    [SerializeField] private List<BallCreature> launchedBalls;
     [SerializeField] private Animator catapultAnim;
     private bool launching;
 
@@ -21,7 +21,7 @@ public class Catapult : MonoBehaviour
             catapultAnim.SetTrigger("Launch");
             launching = true;
         }
-        FoodBall detectedBall = detector.ball;
+        BallCreature detectedBall = detector.ball;
         if (!balls.Contains(detectedBall))
         {
             balls.Add(detectedBall);

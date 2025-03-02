@@ -57,6 +57,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc8fb4069097f4b4b92c0687276ca9d7, type: 3}
+--- !u!114 &1519765127296890619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4203849716789811256, guid: dc8fb4069097f4b4b92c0687276ca9d7, type: 3}
+  m_PrefabInstance: {fileID: 3404819585682943683}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441a5694cc7af6c4db6686462a579833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5997258617828617861 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8969714358804250694, guid: dc8fb4069097f4b4b92c0687276ca9d7, type: 3}
@@ -118,6 +129,10 @@ PrefabInstance:
       propertyPath: floating
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4626663793393746110, guid: 4d1f161f31711a3469635e15005e3e57, type: 3}
+      propertyPath: floatBase
+      value: 
+      objectReference: {fileID: 1519765127296890619}
     - target: {fileID: 6630208991452352702, guid: 4d1f161f31711a3469635e15005e3e57, type: 3}
       propertyPath: m_UseGravity
       value: 0

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 764293210120589905, guid: f4831998a33d7e24cadb5ce06491533c, type: 3}
       propertyPath: m_Name
-      value: Sucking Fan
+      value: Fan Sucking
       objectReference: {fileID: 0}
     - target: {fileID: 1536064104864533244, guid: f4831998a33d7e24cadb5ce06491533c, type: 3}
       propertyPath: m_Controller

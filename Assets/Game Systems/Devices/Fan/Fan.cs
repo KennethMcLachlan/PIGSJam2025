@@ -10,7 +10,7 @@ public class Fan : MonoBehaviour
     [SerializeField] private Transform fanDirection;
     [Space(20)]
     [SerializeField] private BallDetector detector;
-    private FoodBall ball;
+    private BallCreature ball;
 
     #region Debugging
     private void Awake()
@@ -22,11 +22,13 @@ public class Fan : MonoBehaviour
     public void BallEnteredFan()
     {
         ball = detector.ball;
+        Debug.Log("Ball Entered Fan");
         StartCoroutine(nameof(BlowingBall));
     }
 
     public void BallExitedFan()
     {
+        Debug.Log("Ball Exited Fan");
         StopAllCoroutines();
         ball = null;
     }

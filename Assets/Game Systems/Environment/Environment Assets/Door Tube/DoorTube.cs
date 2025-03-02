@@ -5,9 +5,9 @@ public class DoorTube : MonoBehaviour
     #region Variables & References
     [Header("Environments")]
     [SerializeField] private DoorTube previousDoorTube;
-    [SerializeField] private GameObject exitedRoom;
+    [SerializeField] private LivingRoom exitedRoom;
     [Space(10)]
-    [SerializeField] private GameObject enteredRoom;
+    [SerializeField] private LivingRoom enteredRoom;
     [SerializeField] private DoorTube nextDoorTube;
     [Space(20)]
     [Header("Door Parts")]
@@ -78,7 +78,7 @@ public class DoorTube : MonoBehaviour
     private void DisableExitRoom()
     {
         //exit door closed, disable exited room
-        exitedRoom.SetActive(false);
+        exitedRoom.gameObject.SetActive(false);
         if (previousDoorTube != null)
         {
             previousDoorTube.gameObject.SetActive(false);
@@ -88,7 +88,7 @@ public class DoorTube : MonoBehaviour
     public void OpenEntrance()
     {
         //open door to next room
-        enteredRoom.SetActive(true);
+        enteredRoom.gameObject.SetActive(true);
         if(nextDoorTube != null)
         {
             nextDoorTube.gameObject.SetActive(true);
@@ -107,6 +107,7 @@ public class DoorTube : MonoBehaviour
         //disable unseen parts of tube
         tubeExtenstion.SetActive(false);
         exitDoor.gameObject.SetActive(false);
+        enteredRoom.PlayerEntered();
     }
     #endregion
 }

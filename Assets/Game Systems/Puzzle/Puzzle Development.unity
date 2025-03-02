@@ -148,25 +148,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35286ae09edca654c90394ddd54a0729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMagnetize: 0
-  testMoveForward: 0
-  testMoveBackward: 0
-  testRotateForward: 0
-  testRotateBackward: 0
-  testRotateRight: 0
-  testRotateLeft: 0
-  testRotateClockwise: 0
-  testRotateCounterClockwise: 0
-  testStopInputting: 0
   magnetizing: 0
+  activeMode:
+    mode: 0
+    modeSet:
+      m_PersistentCalls:
+        m_Calls: []
+    inputUp:
+      m_PersistentCalls:
+        m_Calls: []
+    inputDown:
+      m_PersistentCalls:
+        m_Calls: []
   detectedCollider: {fileID: 0}
   magnetizedObject: {fileID: 0}
   targetPoint: {fileID: 1308324765}
+  rotationOrientation: {fileID: 0}
   positionalStrength: 500
   rotationalStrength: 3
   maxTargetMovementTime: 3
   maxTargetDistance: 2.5
   minTargetDistance: 0.3
+  activeModeIndex: 0
+  manipulationModes: []
   raycastRate: 0.05
   raycastDistance: 2.5
   raycastMask:
@@ -179,10 +183,16 @@ MonoBehaviour:
   objectLost:
     m_PersistentCalls:
       m_Calls: []
+  failedMagnetize:
+    m_PersistentCalls:
+      m_Calls: []
   objectMagnetized:
     m_PersistentCalls:
       m_Calls: []
   objectReleased:
+    m_PersistentCalls:
+      m_Calls: []
+  modeCycled:
     m_PersistentCalls:
       m_Calls: []
   moveModeSet:
@@ -4753,6 +4763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   springStrength: 500
   detector: {fileID: 2004994500}
+  springAnim: {fileID: 0}
 --- !u!1 &1826474141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,7 +5367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2081467712
 Transform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class MagnetDevice : MonoBehaviour
 {
     #region Testing
+    /*
 #if UNITY_EDITOR
     [Header("Testing")]
     [SerializeField] private bool testTriggerButton;
@@ -46,6 +47,7 @@ public class MagnetDevice : MonoBehaviour
     }
     [Space(30)]
 #endif
+    */
     #endregion
 
     #region Variables & References
@@ -230,7 +232,8 @@ public class MagnetDevice : MonoBehaviour
                 magnetizedRB = magnetizedObject.rb;
                 detectedCollider = null;
 
-                SetStartingTargetPosition(magnetizedObject.transform.position);
+                targetPoint.position = magnetizedObject.transform.position;
+                //SetStartingTargetPosition(magnetizedObject.transform.position);
                 magnetizedObject.SetMagnetized(true);
 
                 objectMagnetized.Invoke();
@@ -277,7 +280,34 @@ public class MagnetDevice : MonoBehaviour
             Vector3 rotationTorque = Vector3.zero;
             if (direction == RotationDirection.Forward)
             {
-                rotationTorque = rotationOrientation.right * rotationalStrength;
+                rotationTorque = magnetizedObject.transform.right * rotationalStrength;
+                //rotationTorque = rotationOrientation.right * rotationalStrength;
+            }
+            if (direction == RotationDirection.Backward)
+            {
+                rotationTorque = magnetizedObject.transform.right * -rotationalStrength;
+            }
+            if (direction == RotationDirection.Right)
+            {
+                rotationTorque = magnetizedObject.transform.up * rotationalStrength;
+            }
+            if (direction == RotationDirection.Left)
+            {
+                rotationTorque = magnetizedObject.transform.up * -rotationalStrength;
+            }
+            if (direction == RotationDirection.Clockwise)
+            {
+                rotationTorque = magnetizedObject.transform.forward * -rotationalStrength;
+            }
+            if (direction == RotationDirection.CounterClockwise)
+            {
+                rotationTorque = magnetizedObject.transform.forward * rotationalStrength;
+            }
+            /*
+            if (direction == RotationDirection.Forward)
+            {
+                rotationTorque = magnetizedObject.transform.right * rotationalStrength;
+                //rotationTorque = rotationOrientation.right * rotationalStrength;
             }
             if (direction == RotationDirection.Backward)
             {
@@ -299,6 +329,7 @@ public class MagnetDevice : MonoBehaviour
             {
                 rotationTorque = rotationOrientation.forward * rotationalStrength;
             }
+            */
             StopAllCoroutines();
             StartCoroutine(Rotating(rotationTorque));
         }
@@ -308,6 +339,7 @@ public class MagnetDevice : MonoBehaviour
     #region Object Manipulation
     private void SetStartingTargetPosition(Vector3 grabbedPosition)
     {
+        targetPoint.position = grabbedPosition;
         float distanceToObject = Vector3.Distance(raycastOrigin.position, grabbedPosition);
         float startingTargetDistance = 0;
         if (distanceToObject > maxTargetDistance)
