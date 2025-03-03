@@ -43,7 +43,7 @@ public class LivingRoom : MonoBehaviour
     {
         musicManager.StartRoomMusic();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         foodTube.EnableTube();
 

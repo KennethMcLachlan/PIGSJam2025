@@ -19,6 +19,7 @@ public class BallCreature : MonoBehaviour
     [SerializeField] private Collider ballColl;
     [SerializeField] private MeshRenderer ballMesh;
     [SerializeField] private ParticleSystem burstParticles;
+    [SerializeField] private Animator trailAnim;
     #endregion
 
     #region Configuration
@@ -28,7 +29,7 @@ public class BallCreature : MonoBehaviour
         landed = false;
         screamSound.PlaySound();
     }
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         transform.rotation = Quaternion.LookRotation(rb.linearVelocity, Vector3.forward);
     }
@@ -90,9 +91,14 @@ public class BallCreature : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!landed && detector != null)
+        if (!landed)
         {
-            detector.BallLost();
+            StopAllCoroutines();
+            immune = false;
+            if(detector != null)
+            {
+                detector.BallLost();
+            }
         }
     }
     private IEnumerator Immune(float time)
@@ -128,6 +134,7 @@ public class BallCreature : MonoBehaviour
     private IEnumerator Eaten()
     {
         landed = true;
+        trailAnim.SetTrigger("Hide");
         yield return new WaitForSeconds(0.07f);
         rb.isKinematic = true;
         screamSound.StopSound();

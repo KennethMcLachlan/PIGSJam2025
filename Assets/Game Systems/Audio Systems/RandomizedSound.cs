@@ -3,6 +3,7 @@ using UnityEngine;
 public class RandomizedSound : MonoBehaviour
 {
     [Header("Variables")]
+    [SerializeField] private bool playOnEnable;
     [SerializeField] private AudioClip[] clips;
     [Range(0,2)]
     [SerializeField] private float minPitch = 0.85f;
@@ -11,6 +12,14 @@ public class RandomizedSound : MonoBehaviour
     [Space(20)]
     [Header("References")]
     [SerializeField] private AudioSource soundSource;
+
+    private void OnEnable()
+    {
+        if(playOnEnable)
+        {
+            PlaySound();
+        }
+    }
 
     public void PlaySound()
     {

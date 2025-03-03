@@ -63,7 +63,10 @@ public class FoodTube : MonoBehaviour
     {
         cooldown = false;
         tubeAnim.SetBool("Cooldown", false);
-        enabledSound.PlaySound();
+        if (tubeEnabled)
+        {
+            enabledSound.PlaySound();
+        }
     }
 
     public void DisableTube()

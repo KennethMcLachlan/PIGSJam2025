@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Room Flesh
-  m_Shader: {fileID: -6465566751694194690, guid: 967d9672ab3bc2a40ad93b00f256d7e7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: b5d5e960d1defd141a044340152a4271, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,6 +61,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Flesh:
+        m_Texture: {fileID: 2800000, guid: c875f18f3c9c95e4dafe19c362487e36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Flesh_1:
         m_Texture: {fileID: 2800000, guid: c875f18f3c9c95e4dafe19c362487e36, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -70,11 +74,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Flesh_2:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7fc363bca46e44a4aac091630e6bcf54, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Flesh_2_Normal:
         m_Texture: {fileID: 2800000, guid: 0f407f09328454743a9a9e91685cf3c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Flesh_Metallic_Smoothness:
+        m_Texture: {fileID: 2800000, guid: 6c8b804133ef00344821cff56dd65f21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Flesh_Normal:
+        m_Texture: {fileID: 2800000, guid: b2398ca93105e53489874c2b5c795a5f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -151,8 +163,11 @@ Material:
     - _Flesh_2_Blend: 0
     - _Flesh_2_Normal_Strength: 0
     - _Flesh_2_Tiling: 0.15
+    - _Flesh_Normal_Strength: 0.7
+    - _Flesh_Tiling: 0.16
     - _Floor_Brightening: 1
     - _Floor_Contrast: 0.5
+    - _Floor_Gradient_Size: 2
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -167,7 +182,7 @@ Material:
     - _Ripple_Gradient_Size: 1
     - _Ripple_Scale: 2
     - _Ripple_Speed: 0.2
-    - _Smoothness: 0.5
+    - _Smoothness: 0.7
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -182,6 +197,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color_Overlay: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Floor_Gradient_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple_Cutout_Position: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple_Gradient_Offset: {r: 0, g: -1.8, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
