@@ -6,8 +6,6 @@ public class Mouth : MonoBehaviour
     public bool fed;
     [Space(20)]
     [Header("References")]
-    [SerializeField] private LivingRoom room;
-    [Space(10)]
     [SerializeField] private Animator mouthAnim;
     [SerializeField] private Collider openCollider;
     [SerializeField] private Collider closedCollider;
@@ -29,7 +27,7 @@ public class Mouth : MonoBehaviour
         Invoke(nameof(MouthClosed), 0.2f);
         closeSound.PlaySound();
         fed = true;
-        room.MouthFed();
+        FindFirstObjectByType<LivingRoom>().MouthFed();
     }
     private void MouthClosed()
     {

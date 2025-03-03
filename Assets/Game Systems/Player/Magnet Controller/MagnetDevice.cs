@@ -34,6 +34,11 @@ public class MagnetDevice : MonoBehaviour
     [SerializeField] private LayerMask raycastMask;
     [SerializeField] private Transform raycastOrigin;
     [Space(20)]
+    /*
+    [Header("UI")]
+    [SerializeField] private MagnetDeviceScreenUI magnetDeviceScreenUI;
+    [Space(20)]
+    */
     [Header("Object Detection Events")]
     [SerializeField] private UnityEvent objectDetected;
     [SerializeField] private UnityEvent objectLost;

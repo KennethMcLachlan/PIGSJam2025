@@ -10,13 +10,18 @@ public class MusicManager : MonoBehaviour
     public void StartRoomMusic()
     {
         activeStemSet = stemSets[roomIndex];
-        foreach(Stem persistentStem in activeStemSet.persistentStems)
+
+        foreach (Stem stemToDisable in activeStemSet.stemsToDisable)
         {
-            persistentStem.SetStemEnabled(true);
+            stemToDisable.SetStemEnabled(false);
         }
         foreach (Stem roomStem in activeStemSet.roomStems)
         {
             roomStem.SetStemEnabled(true);
+        }
+        foreach (Stem persistentStem in activeStemSet.persistingStems)
+        {
+            persistentStem.SetStemEnabled(true);
         }
     }
 
@@ -33,6 +38,7 @@ public class MusicManager : MonoBehaviour
 [System.Serializable]
 public class RoomStemSet
 {
-    public Stem[] persistentStems;
+    public Stem[] stemsToDisable;
     public Stem[] roomStems;
+    public Stem[] persistingStems;
 }

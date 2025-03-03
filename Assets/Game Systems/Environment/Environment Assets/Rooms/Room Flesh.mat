@@ -197,6 +197,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color_Overlay: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Floor_Color_Overlay: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
     - _Floor_Gradient_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple_Cutout_Position: {r: 0, g: 0, b: 0, a: 0}
     - _Ripple_Gradient_Offset: {r: 0, g: -1.8, b: 0, a: 0}
