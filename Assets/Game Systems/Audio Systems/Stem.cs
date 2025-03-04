@@ -8,16 +8,25 @@ public class Stem : MonoBehaviour
     [SerializeField] private float fadeInTime;
     private float fadeOutTime = 5;
     [SerializeField] private AudioSource stemSound;
+    private bool stemEnabled;
 
     public void SetStemEnabled(bool enabled)
     {
         if(enabled)
         {
-            StartCoroutine(StemFadingIn());
+            if(!stemEnabled)
+            {
+                StartCoroutine(StemFadingIn());
+                stemEnabled = true;
+            }
         }
         else
         {
-            StartCoroutine(StemFadingOut());
+            if (stemEnabled)
+            {
+                StartCoroutine(StemFadingOut());
+                stemEnabled = false;
+            }
         }
     }
 

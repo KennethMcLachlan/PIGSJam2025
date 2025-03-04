@@ -15027,6 +15027,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 5b68dd8ca587e9144acff939932278e3, type: 3}
     - target: {fileID: 6082018508064505233, guid: 3bef3f5ff8dada04798df3eee4e7e5f9, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6082018508064505233, guid: 3bef3f5ff8dada04798df3eee4e7e5f9, type: 3}
       propertyPath: DopplerLevel
       value: 1.5
       objectReference: {fileID: 0}

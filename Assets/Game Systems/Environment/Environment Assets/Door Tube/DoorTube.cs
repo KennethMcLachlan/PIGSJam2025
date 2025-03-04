@@ -14,6 +14,10 @@ public class DoorTube : MonoBehaviour
     [SerializeField] private TubeDoor exitDoor;
     [SerializeField] private GameObject tubeExtenstion;
     [SerializeField] private TubeDoor enterDoor;
+    [Space(30)]
+    [Header("Final Door")]
+    [SerializeField] private bool finalDoor;
+    [SerializeField] private GameObject endRoom;
     #endregion
 
     #region Testing
@@ -57,6 +61,10 @@ public class DoorTube : MonoBehaviour
         //only show room exit
         tubeExtenstion.SetActive(false);
         enterDoor.gameObject.SetActive(false);
+        if (finalDoor)
+        {
+            endRoom.SetActive(false);
+        }
     }
     #endregion
 
@@ -74,6 +82,11 @@ public class DoorTube : MonoBehaviour
         //entered tube, close door behind player
         exitDoor.Close();
         Invoke(nameof(DisableExitRoom), 1.5f);
+        //enter final music state with silence for last room
+        if (finalDoor)
+        {
+            FindFirstObjectByType<MusicManager>().StartRoomMusic();
+        }
     }
     private void DisableExitRoom()
     {
@@ -88,11 +101,16 @@ public class DoorTube : MonoBehaviour
     public void OpenEntrance()
     {
         //open door to next room
-        enteredRoom.gameObject.SetActive(true);
-        if(nextDoorTube != null)
+        if (finalDoor)
         {
+            endRoom.SetActive(true);
+        }
+        else
+        {
+            enteredRoom.gameObject.SetActive(true);
             nextDoorTube.gameObject.SetActive(true);
         }
+
         enterDoor.Open();
     }
     
@@ -107,7 +125,10 @@ public class DoorTube : MonoBehaviour
         //disable unseen parts of tube
         tubeExtenstion.SetActive(false);
         exitDoor.gameObject.SetActive(false);
-        enteredRoom.PlayerEntered();
+        if(!finalDoor)
+        {
+            enteredRoom.PlayerEntered();
+        }
     }
     #endregion
 }
