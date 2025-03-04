@@ -33,7 +33,7 @@ public class MagneticObject : MonoBehaviour
         }
         if (mode == Mode.RotateClockwise)
         {
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
         if (mode == Mode.RotateSideways)
         {
@@ -41,7 +41,7 @@ public class MagneticObject : MonoBehaviour
         }
         if (mode == Mode.RotateForward)
         {
-            rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         }
     }
 

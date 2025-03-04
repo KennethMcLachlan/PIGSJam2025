@@ -35,7 +35,7 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 2
-    aniso: 1
+    aniso: 8
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -505,6 +505,116 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Down Arrow
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 5
+        width: 270
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c95186eacefb26441920c2f6db6ae468
+      internalID: 116431200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Up Arrow
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 5
+        width: 270
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 769556e15e0011e4fb4c2adbc14b2cbe
+      internalID: 782195897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rotate Backward
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 205
+        width: 270
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a17381dd86c36743b48c4076fc7803b
+      internalID: 406840825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rotate Right
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 205
+        width: 270
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e9d3ee885990be43a8840b74a3e7aa6
+      internalID: 1000561386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rotate Clockwise
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 405
+        width: 270
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f15271cd46fe74f8342997e8423a8d
+      internalID: 1370939385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -520,6 +630,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Background: -154646377
+      Down Arrow: 116431200
+      Rotate Backward: 406840825
+      Rotate Clockwise: 1370939385
+      Rotate Right: 1000561386
+      Spin: -1561677589
       Spin Sideways_1: -1964076655
       Spin Sideways_10: -1845709944
       Spin Sideways_11: -1607096939
@@ -536,6 +651,7 @@ TextureImporter:
       Spin Sideways_9: 948119348
       Spin Sideways_Neutral: -1158656164
       Square: 1895705039
+      Up Arrow: 782195897
       X: 241079325
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

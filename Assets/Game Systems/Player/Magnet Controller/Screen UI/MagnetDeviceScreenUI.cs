@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class MagnetDeviceScreenUI : MonoBehaviour
 {
-    [SerializeField] private Mode activeMode;
+    [Header("Runtime Variables")]
+    [SerializeField] private UIMode activeMode;
     [Space(20)]
+    [Header("UI References")]
     [SerializeField] private GameObject noObjectFound;
     [SerializeField] private GameObject objectFound;
     [Space(10)]
@@ -22,17 +24,25 @@ public class MagnetDeviceScreenUI : MonoBehaviour
         }
     }
 
-    public void InputtingUp()
+    public void Inputting(bool up)
     {
-
+        /*
+        ClearAll();
+        if (up)
+        {
+            activeMode.inputtingUp.SetActive(true);
+        }
+        else
+        {
+            activeMode.inputtingDown.SetActive(true);
+        }
+        */
     }
-    public void InputtingDown()
-    {
 
-    }
     public void InputReleased()
     {
-        
+        ClearAll();
+        activeMode.neutral.SetActive(true);
     }
 
     public void UpdateMode(Mode newMode)
@@ -41,9 +51,15 @@ public class MagnetDeviceScreenUI : MonoBehaviour
         {
             if(newMode == modes[i].uiMode)
             {
-                activeMode = modes[i].uiMode;
+                activeMode = modes[i];
             }
         }
+        InputReleased();
+    }
+
+    public void ClearMode()
+    {
+        SetObjectFound(false);
     }
 
     private void ClearAll()
@@ -53,8 +69,8 @@ public class MagnetDeviceScreenUI : MonoBehaviour
         foreach(UIMode mode in modes)
         {
             mode.neutral.SetActive(false);
-            mode.inputtingUp.SetActive(false);
-            mode.inputtingDown.SetActive(false);
+            //mode.inputtingUp.SetActive(false);
+            //mode.inputtingDown.SetActive(false);
         }
     }
 }

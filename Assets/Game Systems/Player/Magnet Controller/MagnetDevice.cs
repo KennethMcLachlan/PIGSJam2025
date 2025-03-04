@@ -34,11 +34,9 @@ public class MagnetDevice : MonoBehaviour
     [SerializeField] private LayerMask raycastMask;
     [SerializeField] private Transform raycastOrigin;
     [Space(20)]
-    /*
     [Header("UI")]
     [SerializeField] private MagnetDeviceScreenUI magnetDeviceScreenUI;
     [Space(20)]
-    */
     [Header("Object Detection Events")]
     [SerializeField] private UnityEvent objectDetected;
     [SerializeField] private UnityEvent objectLost;
@@ -77,6 +75,7 @@ public class MagnetDevice : MonoBehaviour
 
                 if (detectedCollider != hit.collider && !detected)
                 {
+                    magnetDeviceScreenUI.SetObjectFound(true);
                     objectDetected.Invoke();
                     detected = true;
                 }
@@ -89,6 +88,7 @@ public class MagnetDevice : MonoBehaviour
 
                 if (detectedCollider != null && detected)
                 {
+                    magnetDeviceScreenUI.SetObjectFound(false);
                     objectLost.Invoke();
                     detected = false;
                 }
@@ -125,6 +125,7 @@ public class MagnetDevice : MonoBehaviour
             }
             activeMode = manipulationModes[activeModeIndex];
             magnetizedObject.SetRotationConstraints(activeMode.mode);
+            magnetDeviceScreenUI.UpdateMode(activeMode.mode);
             modeCycled.Invoke();
             activeMode.modeSet.Invoke();
         }
@@ -167,6 +168,8 @@ public class MagnetDevice : MonoBehaviour
                 }
             }
 
+            magnetDeviceScreenUI.Inputting(upButton);
+
             if (activeMode.mode == Mode.Move)
             {
                 Move(upButton);
@@ -179,6 +182,7 @@ public class MagnetDevice : MonoBehaviour
         if (magnetizing)
         {
             StopAllCoroutines();
+            magnetDeviceScreenUI.InputReleased();
         }
     }
     #endregion
@@ -200,6 +204,7 @@ public class MagnetDevice : MonoBehaviour
                 magnetizedObject.SetRotationConstraints(activeMode.mode);
                 magnetizedObject.SetMagnetized(true);
 
+                magnetDeviceScreenUI.UpdateMode(activeMode.mode);
                 objectMagnetized.Invoke();
                 magnetizeFailed = false;
 
@@ -221,6 +226,7 @@ public class MagnetDevice : MonoBehaviour
         magnetizedRB = null;
         activeModeIndex = 0;
 
+        magnetDeviceScreenUI.ClearMode();
         objectReleased.Invoke();
 
         StopAllCoroutines();
@@ -245,11 +251,11 @@ public class MagnetDevice : MonoBehaviour
             Vector3 rotationTorque = Vector3.zero;
             if (direction == RotationDirection.Forward)
             {
-                rotationTorque = magnetizedObject.transform.right * rotationalStrength;
+                rotationTorque = magnetizedObject.transform.forward * rotationalStrength;
             }
             if (direction == RotationDirection.Backward)
             {
-                rotationTorque = magnetizedObject.transform.right * -rotationalStrength;
+                rotationTorque = magnetizedObject.transform.forward * -rotationalStrength;
             }
             if (direction == RotationDirection.Right)
             {
@@ -261,11 +267,11 @@ public class MagnetDevice : MonoBehaviour
             }
             if (direction == RotationDirection.Clockwise)
             {
-                rotationTorque = magnetizedObject.transform.forward * -rotationalStrength;
+                rotationTorque = magnetizedObject.transform.right * -rotationalStrength;
             }
             if (direction == RotationDirection.CounterClockwise)
             {
-                rotationTorque = magnetizedObject.transform.forward * rotationalStrength;
+                rotationTorque = magnetizedObject.transform.right * rotationalStrength;
             }
             /*
             if (direction == RotationDirection.Forward)

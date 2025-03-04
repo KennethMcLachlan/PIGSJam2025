@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e76f05fa07e99549b86d9af7599f429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fanStrength: 75
+  fanStrength: 40
   fanDirection: {fileID: 3595392904729944738}
   detector: {fileID: 1872886468278921412}
 --- !u!95 &1536064104864533244
@@ -1175,7 +1175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2081782470683686127
 Transform:
   m_ObjectHideFlags: 0
@@ -2458,7 +2458,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -5938,7 +5938,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f5a5d0734be567945b4b9843661af8b2, type: 2}
+  - {fileID: 2100000, guid: dacc9d87ccce28a4fb3d76e5011653ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

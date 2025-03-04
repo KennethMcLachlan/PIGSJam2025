@@ -22,25 +22,18 @@ public class Fan : MonoBehaviour
     public void BallEnteredFan()
     {
         ball = detector.ball;
-        Debug.Log("Ball Entered Fan");
-        StartCoroutine(nameof(BlowingBall));
+    }
+
+    private void FixedUpdate()
+    {
+        if (ball != null)
+        {
+            ball.rb.AddForce(fanDirection.up * fanStrength);
+        }
     }
 
     public void BallExitedFan()
     {
-        Debug.Log("Ball Exited Fan");
-        StopAllCoroutines();
         ball = null;
-    }
-
-    private IEnumerator BlowingBall()
-    {
-        while(ball != null)
-        {
-            ball.rb.AddForce(fanDirection.up * fanStrength);
-            yield return new WaitForSeconds(0.0111f);
-            yield return null;
-        }
-        yield return null;
     }
 }

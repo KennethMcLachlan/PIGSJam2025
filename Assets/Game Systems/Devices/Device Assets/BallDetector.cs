@@ -23,12 +23,12 @@ public class BallDetector : MonoBehaviour
     {
         ball = detectedBall;
         ballDetected.Invoke();
-        Debug.Log("Ball Detected");
+        //Debug.Log("Ball Detected");
     }
 
     public void BallLost()
     {
         ballLost.Invoke();
-        Debug.Log("Ball Lost");
+        //Debug.Log("Ball Lost");
     }
 }
