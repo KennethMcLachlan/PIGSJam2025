@@ -1401,6 +1401,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 321004214}
+    - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 321004215}
     - targetCorrespondingSourceObject: {fileID: 1767192433, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2038923275}
@@ -1643,6 +1646,19 @@ MonoBehaviour:
   animBools:
   - Holding Up
   - Holding Down
+--- !u!114 &321004215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321004206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c3fa8400129c3449e40e7406b013dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFramerate: 120
 --- !u!1 &327049117
 GameObject:
   m_ObjectHideFlags: 0
@@ -32226,7 +32242,7 @@ ReflectionProbe:
   m_RenderDynamicObjects: 0
   m_UseOcclusionCulling: 1
   m_Importance: 1
-  m_CustomBakedTexture: {fileID: 8900000, guid: d7a9fc4eaa7287a43a84c38d43197d27, type: 3}
+  m_CustomBakedTexture: {fileID: 8900000, guid: 26c05fcde0ebe214691dd8cb7b3a28ee, type: 3}
 --- !u!4 &1848290435
 Transform:
   m_ObjectHideFlags: 0
